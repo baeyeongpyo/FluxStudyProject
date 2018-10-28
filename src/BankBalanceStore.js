@@ -1,4 +1,32 @@
 import AppDispatcher from './AppDispatcher';
+import bankConstants from './constrants';
+import {ReduceStore} from 'flux/utils';
+
+class BankBalanceStore extends ReduceStore{
+    getInitialState(){
+        return 0;
+    }
+
+    reduce(state, action){
+        switch(action.type){
+            case bankConstants.CREATE_ACCOUNT:
+            return 0;
+
+            case bankConstants.DEPOSITED_INFO_ACCOUNT:
+            return state + action.amount;
+
+            case bankConstants.WITHDREW_FROM_ACCOUNT:
+            return state - action.amount;
+
+            default:
+        }
+    }
+}
+export default new BankBalanceStore(AppDispatcher);
+
+
+
+/* import AppDispatcher from './AppDispatcher';
 import {Store} from 'flux/utils';
 import bankConstants from './constrants';
 
@@ -33,7 +61,7 @@ class BankBalanceStore extends Store{
 }
 
 export default new BankBalanceStore(AppDispatcher);
-
+ */
 
 
 
