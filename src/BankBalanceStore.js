@@ -1,4 +1,43 @@
-import {EventEmitter} from 'fbemitter';
+import AppDispatcher from './AppDispatcher';
+import {Store} from 'flux/utils';
+import bankConstants from './constrants';
+
+let balance = 0;
+
+class BankBalanceStore extends Store{
+    getState(){
+        return balance;
+    }
+
+    __onDispatch(action){
+        switch(action.type){
+            case bankConstants.CREATE_ACCOUNT:
+            balance = 0;
+            this.__emitChange();
+            break;
+
+            case bankConstants.DEPOSITED_INFO_ACCOUNT:
+            balance = balance + action.amount;
+            this.__emitChange();
+            break;
+
+            case bankConstants.WITHDREW_FROM_ACCOUNT:
+            balance = balance - action.amount;
+            this.__emitChange();
+            break;
+
+            default:
+        
+        }
+    }
+}
+
+export default new BankBalanceStore(AppDispatcher);
+
+
+
+
+/* import {EventEmitter} from 'fbemitter';
 import AppDispatcher from './AppDispatcher';
 import bankConstants from './constrants';
 
@@ -36,4 +75,4 @@ BankBalanceStore.dispatchToken = AppDispatcher.register((action) => {
     }
 });
 
-export default BankBalanceStore;
+export default BankBalanceStore; */
